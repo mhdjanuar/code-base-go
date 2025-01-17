@@ -21,6 +21,16 @@ func main() {
 	// Inisialisasi database
 	db := bootstrap.InitializeDatabase()
 
+	sqlDB, err := db.DB()
+	if err != nil {
+		log.Fatalf("Gagal mendapatkan koneksi database: %v", err)
+	}
+	defer func() {
+		if err := sqlDB.Close(); err != nil {
+			log.Fatalf("Gagal menutup koneksi database: %v", err)
+		}
+	}()
+
     // Inisialisasi repository, usecase, dan handler
 	userRepo := repository.NewSQLUserRepo(db)
 	userUseCase := usecase.NewUserUseCase(userRepo)
