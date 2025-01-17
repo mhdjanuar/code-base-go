@@ -7,10 +7,17 @@ import (
 	"code-base-go/internal/bootstrap"
 	"code-base-go/internal/repository"
 	"code-base-go/internal/usecase"
+	"code-base-go/pkg/config"
 	"log"
 )
 
 func main() {
+	// Load file .env
+	err := config.LoadEnvFile("../.env")
+	if err != nil {
+		log.Println("Peringatan: file .env tidak ditemukan, menggunakan environment default.")
+	}
+
 	// Inisialisasi database
 	db := bootstrap.InitializeDatabase()
 
