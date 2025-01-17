@@ -1,10 +1,10 @@
 package entities
 
 type User struct {
-	ID       int
-	Name     string
-	Email    string
-	Password string
+	ID       int    `gorm:"primaryKey"`
+	Name     string `gorm:"not null"`
+	Email    string `gorm:"unique;not null"`
+	Password string `gorm:"not null"`
 }
 
 func (u *User) IsValid() bool {

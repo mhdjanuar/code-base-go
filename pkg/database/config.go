@@ -1,13 +1,14 @@
 package database
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
 
 	_ "github.com/lib/pq" // PostgreSQL driver
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type Config struct {
@@ -31,21 +32,20 @@ func NewConfig() *Config {
 }
 
 // Connect membuka koneksi ke database berdasarkan konfigurasi
-func (c *Config) Connect() *sql.DB {
+func (c *Config) Connect() *gorm.DB {
 	dsn := fmt.Sprintf(
 		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
 		c.Host, c.Port, c.User, c.Password, c.DBName, c.SSLMode,
 	)
-	db, err := sql.Open("postgres", dsn)
-	if err != nil {
-		log.Fatalf("Gagal membuka koneksi database: %v", err)
-	}
 
-	if err := db.Ping(); err != nil {
-		log.Fatalf("Tidak dapat terhubung ke database: %v", err)
+	// Membuka koneksi menggunakan GORM
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatalf("Gagal membuka koneksi ke database: %v", err)
 	}
 
 	log.Println("Koneksi ke database berhasil")
+	
 	return db
 }
 
