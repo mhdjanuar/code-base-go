@@ -26,9 +26,6 @@ func main() {
 
 	// Get the first argument as the action
 	action := os.Args[1]
-
-	fmt.Println(action)
-
 	switch action {
 		case "update", "rollback", "status":
 			command := os.Args[1]
