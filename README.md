@@ -1,4 +1,4 @@
-# Proyek Clean Architecture
+# Code Base with go
 
 Proyek ini mengimplementasikan **Clean Architecture** yang diperkenalkan oleh Robert C. Martin (Uncle Bob). Arsitektur ini membantu memisahkan kode berdasarkan tanggung jawab dan menciptakan aplikasi yang mudah dipelihara serta diubah.
 
