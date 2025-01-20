@@ -8,13 +8,20 @@ import (
 )
 
 func RunLiquibase(command string) error {
+	// Get the database configurations from the environment
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbName := os.Getenv("DB_NAME")
+
+	liquibaseURL := fmt.Sprintf("jdbc:postgresql://%s:%s/%s", dbHost, dbPort, dbName)
+
 	// Construct the Liquibase command arguments
 	liquibaseCmd := []string{
-		"--driver=" + os.Getenv("LIQUIBASE_DRIVER"),
-		"--url=" + os.Getenv("LIQUIBASE_URL"),
+		"--driver=" + "org.postgresql.Driver",
+		"--url=" + liquibaseURL,
 		"--username=" + os.Getenv("DB_USER"),
 		"--password=" + os.Getenv("DB_PASSWORD"),
-		"--changeLogFile=" + os.Getenv("LIQUIBASE_CHANGELOG_FILE"),
+		"--changeLogFile=" + "db/changelog/master.xml",
 		command,
 	}
 
