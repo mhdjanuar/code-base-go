@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	adapterHttp "code-base-go/internal/adapter/http" // Alias untuk package internal HTTP
 	"code-base-go/internal/bootstrap"
+	adapterHttp "code-base-go/internal/delivery/http" // Alias untuk package internal HTTP
 	"code-base-go/internal/repository"
 	"code-base-go/internal/usecase"
 	"code-base-go/pkg/config"
@@ -13,9 +13,9 @@ import (
 
 func main() {
 	// Load file .env
-	err := config.LoadEnvFile("../.env")
+	err := config.LoadEnvFile("../../.env")
 	if err != nil {
-		log.Println("Peringatan: file .env tidak ditemukan, menggunakan environment default.")
+		log.Println("Warning: file .env not found, using environment default.")
 	}
 
 	// Inisialisasi database
